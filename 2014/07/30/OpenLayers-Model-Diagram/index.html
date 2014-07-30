@@ -1,0 +1,353 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>OpenLayers对象模型图 | pingoor&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="pingoor">
+    
+    <meta name="description" content="前言
+OpenLayers作为一款优秀的开源的webGIS API，在国外的应用十分广泛，在国内也有一定的应用，比如超图和天地图的WebGIS的javascript API的就是基于OpenLayers稍作修改而成的。虽然在其官网和github上都有比较详尽的API说明文档和使用样例，但对于刚接触o">
+    
+    
+    
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.svg" alt="pingoor&#39;s Blog" title="pingoor&#39;s Blog"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="pingoor&#39;s Blog">pingoor&#39;s Blog</a></h1>
+				<h2 class="blog-motto">古今之立大事者，不惟有超世之才，亦必有坚韧不拔之志</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/">地图</a></li>
+					
+						<li><a href="/">关于</a></li>
+					
+					<li>
+					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:www.pingoor.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2014/07/30/OpenLayers-Model-Diagram/" title="OpenLayers对象模型图" itemprop="url">OpenLayers对象模型图</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://www.pingoor.com" title="pingoor">pingoor</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2014-07-30T13:07:00.000Z" itemprop="datePublished">2014-07-30</time>
+    更新日期:<time datetime="2014-07-30T13:32:00.000Z" itemprop="dateModified">2014-07-30</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#OpenLayers对象模型图"><span class="toc-number">2.</span> <span class="toc-text">OpenLayers对象模型图</span></a></li></ol>
+		</div>
+		
+		<h2 id="前言">前言</h2>
+<p>OpenLayers作为一款优秀的开源的webGIS API，在国外的应用十分广泛，在国内也有一定的应用，比如超图和天地图的WebGIS的javascript API的就是基于OpenLayers稍作修改而成的。虽然在其官网和github上都有比较详尽的API说明文档和使用样例，但对于刚接触openlayers的同学来说，面对其庞大的接口(类)，想在短时间内理清各接口之间的关系是十分困难的。我在初次接触openlayer时，曾在网上google和baidu了很长时间，最终还是没发现有十分直观的介绍openlayers的接口关系的文章。因此，我想到当初在学习ArcObject开发的时候，经常翻阅的ArcObject对象模型图。它将繁杂的ArcObject各接口的关系使用UML类图的形式简介明了的展现出来，对开发者的帮助真是十分的明显。所以我就了自己动手制作一份OpenLayers的对象模型图的想法，一来可以提高我的UML水平，二来可以帮我审查和巩固自己对openlayers的理解。</p>
+<h2 id="OpenLayers对象模型图">OpenLayers对象模型图</h2>
+<p>对象模型图是基于UML的类图制作的，关于UML的类图的一些概念有兴趣的同学可以网上搜搜看。<br>直接上图</p>
+<p><img src="diagram.png" alt="OpenLayers对象模型图"></p>
+<p>说明：</p>
+<blockquote>
+<p>   Map：最核心的对象，所有的其他对象都是为构建Map服务的。<br>    Layer：Map中的图层，用于分层展示地理数据。<br>    Grid：网格图层，继承自HttpRequest，即这类图层都是通过http请求获得的。<br>    Tile：瓦片，是构成Gird图层的单元，可以理解为一幅小图片。<br>    Marker：地图上的标记点，主要表现为一个有位置的图标。<br>    Vector：矢量图层，也可以看做地图覆盖层(overlay)，可以用存放自己定义的数据。<br>    Stratey：策略，用于根据指定策略显示Vector中的数据。<br>    Filter：过滤器，根据一定的条件过滤出Vector中需要显示的数据。<br>    Render：渲染器，用于对Vector实现的数据根据指定的样式渲染。<br>    Protocol：协议，用于根据指定格式的协议从服务端或本地文件读取数据后在Vector中展示。<br>    Format：数据文件的格式。<br>    Control：Map上的控件，用于和地图交互。<br>    Handler：事件处理句柄，封装了浏览器事件。<br>    Feature：要素，它是Vector图层的内容，由几何图形和属性信息组成。<br>    Geometry：几何图形，是要素的图形表现。<br>    Popup：地图上的气泡弹出框。</p>
+</blockquote>
+<p>上面的对象模型图只是OpenLayers最基本的类图，OpenLayers中的许多具体的类都是基于这些基本类扩展而来。</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/openlayers/">openlayers</a><a href="/tags/gis/">gis</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/GIS/">GIS</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://www.pingoor.com/2014/07/30/OpenLayers-Model-Diagram/" data-title="OpenLayers对象模型图 | pingoor&#39;s Blog" data-tsina="2669170743" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+	
+<section class="comment">
+	<div class="ds-thread"></div>
+</section>
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#OpenLayers对象模型图"><span class="toc-number">2.</span> <span class="toc-text">OpenLayers对象模型图</span></a></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+			<li><a href="/categories/GIS/" title="GIS">GIS<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/gis/" title="gis">gis<sup>1</sup></a></li>
+		
+			<li><a href="/tags/openlayers/" title="openlayers">openlayers<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+  <div class="tagcloudlist">
+    <p class="asidetitle">标签云</p>
+    <div class="tagcloudlist clearfix">
+       <a href="/tags/gis/" style="font-size: NaNpx;">gis</a><a href="/tags/openlayers/" style="font-size: NaNpx;">openlayers</a>
+    </div>
+  </div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+      <li><a href="http://yangjian.me" target="_blank" title="YangJian">Alimon's Blog</a></li>
+      <li><a href="http://zespia.tw/hexo" target="_blank" title="Hexo">Hexo</a></li>
+    </ul>
+</div>
+
+  <div class="rsspart">
+	<a href="null" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello, I&#39;m pingoor. <br/>
+			This is my blog, enjoy youself!</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		<a href="http://weibo.com/http://weibo.com/2669170743" target="_blank" title="weibo"></a>
+		
+		
+		
+		<a href="https://github.com/pingoor" target="_blank" title="github"></a>
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://zespia.tw/hexo/" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2014 
+		
+		<a href="http://www.pingoor.com" target="_blank" title="pingoor">pingoor</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"pingoor"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+  </body>
+</html>
