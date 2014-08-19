@@ -80,7 +80,7 @@ html5的canvas元素(画布)用于在网页实时生成图像，并且可以操�
     </p>
   <p class="article-time">
     <time datetime="2014-08-19T12:57:09.000Z" itemprop="datePublished">2014-08-19</time>
-    更新日期:<time datetime="2014-08-19T12:22:45.000Z" itemprop="dateModified">2014-08-19</time>
+    更新日期:<time datetime="2014-08-19T13:15:51.000Z" itemprop="dateModified">2014-08-19</time>
     
   </p>
 </header>
@@ -152,7 +152,7 @@ ctx.strokeText(<span class="string">"Hello!"</span>, <span class="number">10</sp
 <p>arc方法用来绘制扇形。</p>
 <pre><code>ctx.arc(x, y, radius, start<span class="variable">Angle</span>, <span class="keyword">end</span><span class="variable">Angle</span>, anticlockwise);
 </code></pre><p>arc方法的x和y参数是圆心坐标，radius是半径，startAngle和endAngle则是扇形的起始角度和终止角度（以弧度表示），anticlockwise表示做图时应该逆时针画（true）还是顺时针画（false）。</p>
-<p>下面是如何绘制实心的圆形。</p>
+<p>下面是绘制实心的圆形。</p>
 <pre><code>ctx.<span class="keyword">begin</span><span class="variable">Path</span>(); 
 ctx.arc(<span class="number">60</span>, <span class="number">60</span>, <span class="number">50</span>, <span class="number">0</span>, <span class="variable">Math</span>.<span class="variable">PI</span>*<span class="number">2</span>, <span class="literal">true</span>); 
 ctx.fill<span class="variable">Style</span> = <span class="string">"#000000"</span>; 
@@ -209,8 +209,7 @@ ctx.drawImage(img, <span class="number">0</span>, <span class="number">0</span>)
 <pre><code>ctx<span class="class">.drawImage</span>(<span class="tag">img</span>,x,y,<span class="attribute">width</span>,<span class="attribute">height</span>);
 </code></pre><p><strong>裁切图形</strong></p>
 <pre><code>ctx<span class="class">.drawImage</span>(<span class="tag">img</span>,sx,sy,swidth,sheight,x,y,<span class="attribute">width</span>,<span class="attribute">height</span>);
-</code></pre><p>方法接受三个参数，第一个参数是图像文件的DOM元素（即img标签），第二个和第三个参数是图像左上角在Canvas元素中的坐标，上例中的（0, 0）就表示将图像左上角放置在Canvas元素的左上角。</p>
-<p>参数说明：</p>
+</code></pre><p>参数说明：</p>
 <pre><code><span class="attribute">img</span>: <span class="string">图像文件的DOM元素（即img标签）</span>
 <span class="attribute">x</span>: <span class="string">图像左上角在Canvas元素中的 x 坐标</span>
 <span class="attribute">y</span>: <span class="string">图像左上角在Canvas元素中的 y 坐标</span>
@@ -280,9 +279,9 @@ ctx.fillRect(<span class="number">180</span>,<span class="number">10</span>,<spa
  
 
 <div class="next">
-<a href="/2014/08/16/packagejson-specifics/"  title="nodejs的package.json编写规范">
+<a href="/2014/08/16/packagejson-specifics/"  title="nodejs中package.json编写规范">
  <strong>NEXT:</strong><br/> 
- <span>nodejs的package.json编写规范
+ <span>nodejs中package.json编写规范
 </span>
 </a>
 </div>
