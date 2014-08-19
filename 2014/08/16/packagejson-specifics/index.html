@@ -1,0 +1,514 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>nodejs的package.json编写规范 | pingoor&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="pingoor">
+    
+    <meta name="description" content="概述
+我们在使用nodejs做web开发或者使用npm管理各种包资源的时候，在包的根目录下一定会有package.json文件。这是因为nodejs采用了CommonJS规范。package.json是CommonJS规定的用来描述包的文件。严格符合CommonJS规范的包应该具备以下特征: 
+1.">
+    
+    
+    
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.svg" alt="pingoor&#39;s Blog" title="pingoor&#39;s Blog"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="pingoor&#39;s Blog">pingoor&#39;s Blog</a></h1>
+				<h2 class="blog-motto">古今之立大事者，不惟有超世之才，亦必有坚韧不拔之志</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/">地图</a></li>
+					
+						<li><a href="/">关于</a></li>
+					
+					<li>
+					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:www.pingoor.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2014/08/16/packagejson-specifics/" title="nodejs的package.json编写规范" itemprop="url">nodejs的package.json编写规范</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://www.pingoor.com" title="pingoor">pingoor</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2014-08-16T11:57:09.000Z" itemprop="datePublished">2014-08-16</time>
+    更新日期:<time datetime="2014-08-19T12:43:04.000Z" itemprop="dateModified">2014-08-19</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#概述"><span class="toc-number">1.</span> <span class="toc-text">概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#说明"><span class="toc-number">2.</span> <span class="toc-text">说明</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#name"><span class="toc-number">2.1.</span> <span class="toc-text">name</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#version"><span class="toc-number">2.2.</span> <span class="toc-text">version</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#description"><span class="toc-number">2.3.</span> <span class="toc-text">description</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#keywords"><span class="toc-number">2.4.</span> <span class="toc-text">keywords</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#homepage"><span class="toc-number">2.5.</span> <span class="toc-text">homepage</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#bugs"><span class="toc-number">2.6.</span> <span class="toc-text">bugs</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#license"><span class="toc-number">2.7.</span> <span class="toc-text">license</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#author"><span class="toc-number">2.8.</span> <span class="toc-text">author</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#contributors"><span class="toc-number">2.9.</span> <span class="toc-text">contributors</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#files"><span class="toc-number">2.10.</span> <span class="toc-text">files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#main"><span class="toc-number">2.11.</span> <span class="toc-text">main</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#bin"><span class="toc-number">2.12.</span> <span class="toc-text">bin</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#man"><span class="toc-number">2.13.</span> <span class="toc-text">man</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#directories"><span class="toc-number">2.14.</span> <span class="toc-text">directories</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#repository"><span class="toc-number">2.15.</span> <span class="toc-text">repository</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#scripts"><span class="toc-number">2.16.</span> <span class="toc-text">scripts</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#dependencies"><span class="toc-number">2.17.</span> <span class="toc-text">dependencies</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#devDependencies"><span class="toc-number">2.18.</span> <span class="toc-text">devDependencies</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#engines"><span class="toc-number">2.19.</span> <span class="toc-text">engines</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#preferGlobal"><span class="toc-number">2.20.</span> <span class="toc-text">preferGlobal</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#private"><span class="toc-number">2.21.</span> <span class="toc-text">private</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#publishConfig"><span class="toc-number">2.22.</span> <span class="toc-text">publishConfig</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-number">3.</span> <span class="toc-text">参考资料</span></a></li></ol>
+		</div>
+		
+		<h2 id="概述">概述</h2>
+<p>我们在使用nodejs做web开发或者使用npm管理各种包资源的时候，在包的根目录下一定会有package.json文件。这是因为nodejs采用了CommonJS规范。package.json是CommonJS规定的用来描述包的文件。<br>严格符合CommonJS规范的包应该具备以下特征: </p>
+<pre><code><span class="bullet">1. </span>package.json必须在包的顶层目录下; 
+<span class="bullet">2. </span>二进制文件应该在bin目录下; 
+<span class="bullet">3. </span>JavaScript代码应该在lib目录下; 
+<span class="bullet">4. </span>文档应该在doc目录下; 
+<span class="bullet">5. </span>单元测试应该在test目录下。
+</code></pre><p>nodejs在调用某个包时,会首先检查包中package.json文件的main字段,将其作为包的接口模块,如果package.json或main字段不存在,会尝试寻找index.js或index.node作为包的入口。 </p>
+<h2 id="说明">说明</h2>
+<p>符合规范的package.json文件应该含有以下字段。 </p>
+<h3 id="name">name</h3>
+<p>包的名称。name必须设置，且必须是唯一，否则你的包将不会被安装。name的设置一般遵循以下规则：</p>
+<pre><code><span class="bullet">1. </span>全部小写；
+<span class="bullet">2. </span>不要包含"js"或"node"字符；
+<span class="bullet">3. </span>不要以点号和下划线开头，不使用不符合url字符串格式标准的字符；
+<span class="bullet">4. </span>要言简意赅；
+<span class="bullet">5. </span>如果你的包需要发布，则要保证name在[<span class="link_label">npm注册表中</span>](<span class="link_url">http://registry.npmjs.org/</span>)是唯一的。 
+</code></pre><h3 id="version">version</h3>
+<p>包的版本。version必须设置。name和version组合构成你的包的唯一标识。版本号遵循 <strong>MAJOR.MINOR.PATCH</strong> 的编写规则。</p>
+<pre><code><span class="bullet">1. </span>MAJOR 主版本。当包有重大修改时应该改变。
+<span class="bullet">2. </span>MINIR 小版本。当包进行了一些功能性修改时应该改变。
+<span class="bullet">3. </span>PATH 补丁。当包或进行了bug修复后应该修改。
+</code></pre><h3 id="description">description</h3>
+<p>包的描述信息。应该言简意赅。</p>
+<h3 id="keywords">keywords</h3>
+<p>包的关键词。应该是一个集合。</p>
+<h3 id="homepage">homepage</h3>
+<p>项目主页的url地址。<br><strong>注意：</strong> homepage不同于url。如果在package.json中设置了url字段，npm注册表会认为包被重定向到其他的发布位置，这样的话你会被鄙视的。所以不推荐使用url字段。</p>
+<h3 id="bugs">bugs</h3>
+<p>bug提交的url地址或者email邮箱。<br>例如：</p>
+<pre><code>{ 
+    "<span class="attribute">url</span>" : <span class="value"><span class="string">"http://github.com/owner/project/issues"</span></span>, 
+    "<span class="attribute">email</span>" : <span class="value"><span class="string">"project@hostname.com"</span>
+</span>}
+</code></pre><h3 id="license">license</h3>
+<p>包的许可。一些通用的许可如 MIT 或 BSD-3-Clause。更多许可请参见 <a href="https://spdx.org/licenses/" target="_blank" rel="external">SPDX License List</a><br>例如：</p>
+<pre><code><span class="string">"license"</span>: <span class="string">"MIT"</span>
+</code></pre><h3 id="author">author</h3>
+<p>包的作者。包括作者的姓名，也可添加email和个人主页信息。<br>例如：</p>
+<pre><code>{     
+    "<span class="attribute">name</span>" : <span class="value"><span class="string">"Barney Rubble"</span></span>, 
+    "<span class="attribute">email</span>" : <span class="value"><span class="string">"b@rubble.com"</span></span>, 
+    "<span class="attribute">url</span>" : <span class="value"><span class="string">"http://barnyrubble.tumblr.com/"</span>
+</span>}
+</code></pre><p>或者简写成：</p>
+<pre><code><span class="input"><span class="prompt">"Barney Rubble &lt;b@rubble.com&gt;</span> (<span class="symbol">http:</span>/<span class="regexp">/barnyrubble.tumblr.com/</span>)<span class="string">"</span></span>
+</code></pre><h3 id="contributors">contributors</h3>
+<p>包的参与者。应该是一个集合。内容与author相同。</p>
+<h3 id="files">files</h3>
+<p>包含到包中的文件。应该是一个集合。可以在包的根目录下提供了一个”.npmignore”文件，指定不被包包含的文件。</p>
+<h3 id="main">main</h3>
+<p>指向包的主入口。例如，如果你的包名为 foo，当用户通过 require(“foo”) 访问包时，就会返回你的主模块的exports对象。<br>例如：</p>
+<pre><code><span class="string">"main"</span>: <span class="string">"lib/foo.js"</span>
+</code></pre><h3 id="bin">bin</h3>
+<p>用于对外暴露包中的可执行脚本文件。应该是一个key/avlue键值对对象。对象的key应该是可执行脚本的名字，value应该是指向可执行脚本文件的相对路径。包安装时会自动安装这些可执行脚本路径到环境变量PATH中。<br>例如：</p>
+<pre><code><span class="string">"bin"</span> : { <span class="string">"cli"</span> : <span class="string">"./cli.js"</span> } 
+</code></pre><p>如果只有一个可执行脚本文件，也可简写成：</p>
+<pre><code><span class="string">"bin"</span>: <span class="string">"./path/to/program"</span>
+</code></pre><h3 id="man">man</h3>
+<p>指示帮助文档的位置。可以是单个或多个文件。<br>单文件示例：</p>
+<pre><code><span class="string">"man"</span> : <span class="string">"./man/doc.1"</span>
+</code></pre><p>多文件示例：</p>
+<pre><code><span class="string">"man"</span> : [ <span class="string">"./man/foo.1"</span>, <span class="string">"./man/bar.1"</span> ]
+</code></pre><h3 id="directories">directories</h3>
+<p>显示包的组织结构。</p>
+<blockquote>
+<p>directories.lib: 指示库的位置。<br>  directories.bin：意义同bin字段；如果已经设置过bin字段，则这里的bin无效。<br>  directories.man：意义同man字段。<br>  directories.doc：放置markdown文件的位置。<br>  directories.example： 放置样例脚本文件的位置。</p>
+</blockquote>
+<p>例如：</p>
+<pre><code><span class="string">"directories"</span>:{<span class="string">"doc"</span>:<span class="string">"./doc"</span>,<span class="string">"man"</span>:<span class="string">"./man"</span>,<span class="string">"lib"</span>:<span class="string">"./lib"</span>,<span class="string">"bin"</span>:<span class="string">"./bin"</span>}
+</code></pre><h3 id="repository">repository</h3>
+<p>指示包的源代码存储的位置和类型。可以帮助其他想贡献代码的人。<br>例如存储到github上：</p>
+<pre><code><span class="string">"repository"</span> :
+  { 
+      <span class="string">"type"</span> : <span class="string">"git"</span>, 
+      <span class="string">"url"</span> : <span class="string">"http://github.com/npm/npm.git"</span>
+  }
+</code></pre><p>或者存放到svn上：</p>
+<pre><code><span class="string">"repository"</span> :
+  { 
+      <span class="string">"type"</span> : <span class="string">"svn"</span>, 
+      <span class="string">"url"</span> : <span class="string">"http://v8.googlecode.com/svn/trunk/"</span>
+  }
+</code></pre><h3 id="scripts">scripts</h3>
+<p>对外暴露额外的npm命令。应该是一个hash对象。对象的key是npm命令，value是脚本或脚本的路径。这些命令可以通过 <code>npm run {command name}</code> 或 <code>npm run-script {command name}</code> 来执行这些命令。<br>例如：</p>
+<pre><code> "script": {
+    "test": "vows <span class="comment">--spec --isolate",</span>
+    "<span class="operator"><span class="keyword">start</span><span class="string">": "</span>node <span class="keyword">index</span>.js<span class="string">",
+    "</span>predeploy<span class="string">": "</span>echo im about <span class="keyword">to</span> deploy<span class="string">",
+    "</span>postdeploy<span class="string">": "</span>echo ive deployed<span class="string">",
+    "</span>prepublish<span class="string">": "</span>coffee <span class="comment">--bare --compile --output lib/foo src/foo/*.coffee"</span>
+  }</span>
+</code></pre><h3 id="dependencies">dependencies</h3>
+<p>包依赖的其他包。当按照包时，依赖的包会一起被安装。是一个包含包名和版本范围的hash对象。<br>版本范围的规则如下：</p>
+<ul>
+<li><code>version</code> 必须与指定的版本号完全匹配</li>
+<li><code>&gt;version</code> 必须高于指定的版本号</li>
+<li><code>&gt;=version</code> 必须高于或等于指定的版本号</li>
+<li><code>&lt;version</code> 必须小于指定的版本号</li>
+<li><code>&lt;=version</code> 必须小于或等于指定的版本号</li>
+<li><code>~version</code> 必须与指定的版本号趋近。如 <code>~1.2.3 := &gt;=1.2.3 &lt;1.3.0</code></li>
+<li><code>^version</code> 必须与指定版本号匹配。如 <code>^1.2.3 := &gt;=1.2.3 &lt;2.0.0</code></li>
+<li><code>1.2.x</code> 等价于 <code>&gt;=1.2.0 &lt;1.3.0</code></li>
+<li><code>*</code> 匹配任何版本</li>
+<li><code>&quot;&quot;</code> 空字符，等价于<code>*</code></li>
+<li><code>version1 - version2</code> 等价于 <code>&gt;=version1 &lt;=version2</code></li>
+<li><code>range1 || range2</code> range1 或 range2 范围内的版本都可以</li>
+<li><code>github...</code> 从git上获取指定版本</li>
+<li><code>user/repo</code> 从github上获取指定版本</li>
+<li><code>http://...</code> 从url地址获取指定版本</li>
+</ul>
+<p>更多规则可以参见 <a href="https://www.npmjs.org/doc/misc/semver.html" target="_blank" rel="external">npm版本语义</a>。</p>
+<p>例如：</p>
+<pre><code><span class="string">"dependencies"</span>: {
+    <span class="string">"primus"</span>: <span class="string">"*"</span>,
+    <span class="string">"async"</span>: <span class="string">"~0.8.0"</span>,
+    <span class="string">"express"</span>: <span class="string">"4.2.x"</span>,
+    <span class="string">"winston"</span>: <span class="string">"git://github.com/flatiron/winston#master"</span>,
+    <span class="string">"bigpipe"</span>: <span class="string">"bigpipe/pagelet"</span>,
+    <span class="string">"plates"</span>: <span class="string">"https://github.com/flatiron/plates/tarball/master"</span>
+  }
+</code></pre><h3 id="devDependencies">devDependencies</h3>
+<p>开发或测试时的包依赖。不用安装其他额外的文档。可以使用 <code>npm install --dev</code> 来安装。设置规则与dependencies字段一样。</p>
+<h3 id="engines">engines</h3>
+<p>指定node的版本。版本的设置规则同dependencies字段。<br>例如：</p>
+<pre><code><span class="string">"engines"</span> : { <span class="string">"node"</span> : <span class="string">"&gt;=0.10.3 &lt;0.12"</span> }
+</code></pre><h3 id="preferGlobal">preferGlobal</h3>
+<p>指示包应该在全局安装。安装命名为 <code>npm install -g {module-name}</code>。<br>例如：</p>
+<pre><code><span class="string">"preferGlobal"</span>: <span class="literal">true</span>
+</code></pre><h3 id="private">private</h3>
+<p>指示包不应该被发布。<br>例如：</p>
+<pre><code><span class="string">"private"</span>: <span class="literal">true</span>
+</code></pre><h3 id="publishConfig">publishConfig</h3>
+<p>包发布时的配置参数。这些配置参数会覆盖默认的npm配置。最常见的用法是使用publishConfig来发布你的包到私有npm注册表，这样既能利用npm提供的服务，又可以私有你的包。</p>
+<h2 id="参考资料">参考资料</h2>
+<ol>
+<li><p><a href="https://www.npmjs.org/doc/files/package.json.html" target="_blank" rel="external">Specifics of npm’s package.json handling</a></p>
+</li>
+<li><p><a href="http://browsenpm.org/package.json" target="_blank" rel="external">Nodejitsu package.json guide</a></p>
+</li>
+</ol>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/nodejs/">nodejs</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/Web/">Web</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://www.pingoor.com/2014/08/16/packagejson-specifics/" data-title="nodejs的package.json编写规范 | pingoor&#39;s Blog" data-tsina="2669170743" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2014/08/19/canvas-api-learning/" title="html5之canvas api基础">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  html5之canvas api基础</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2014/07/30/OpenLayers-Model-Diagram/"  title="OpenLayers对象模型图">
+ <strong>NEXT:</strong><br/> 
+ <span>OpenLayers对象模型图
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section class="comment">
+	<div class="ds-thread"></div>
+</section>
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#概述"><span class="toc-number">1.</span> <span class="toc-text">概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#说明"><span class="toc-number">2.</span> <span class="toc-text">说明</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#name"><span class="toc-number">2.1.</span> <span class="toc-text">name</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#version"><span class="toc-number">2.2.</span> <span class="toc-text">version</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#description"><span class="toc-number">2.3.</span> <span class="toc-text">description</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#keywords"><span class="toc-number">2.4.</span> <span class="toc-text">keywords</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#homepage"><span class="toc-number">2.5.</span> <span class="toc-text">homepage</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#bugs"><span class="toc-number">2.6.</span> <span class="toc-text">bugs</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#license"><span class="toc-number">2.7.</span> <span class="toc-text">license</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#author"><span class="toc-number">2.8.</span> <span class="toc-text">author</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#contributors"><span class="toc-number">2.9.</span> <span class="toc-text">contributors</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#files"><span class="toc-number">2.10.</span> <span class="toc-text">files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#main"><span class="toc-number">2.11.</span> <span class="toc-text">main</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#bin"><span class="toc-number">2.12.</span> <span class="toc-text">bin</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#man"><span class="toc-number">2.13.</span> <span class="toc-text">man</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#directories"><span class="toc-number">2.14.</span> <span class="toc-text">directories</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#repository"><span class="toc-number">2.15.</span> <span class="toc-text">repository</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#scripts"><span class="toc-number">2.16.</span> <span class="toc-text">scripts</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#dependencies"><span class="toc-number">2.17.</span> <span class="toc-text">dependencies</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#devDependencies"><span class="toc-number">2.18.</span> <span class="toc-text">devDependencies</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#engines"><span class="toc-number">2.19.</span> <span class="toc-text">engines</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#preferGlobal"><span class="toc-number">2.20.</span> <span class="toc-text">preferGlobal</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#private"><span class="toc-number">2.21.</span> <span class="toc-text">private</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#publishConfig"><span class="toc-number">2.22.</span> <span class="toc-text">publishConfig</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-number">3.</span> <span class="toc-text">参考资料</span></a></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+			<li><a href="/categories/GIS/" title="GIS">GIS<sup>1</sup></a></li>
+		
+			<li><a href="/categories/Web/" title="Web">Web<sup>2</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/gis/" title="gis">gis<sup>1</sup></a></li>
+		
+			<li><a href="/tags/html5/" title="html5">html5<sup>1</sup></a></li>
+		
+			<li><a href="/tags/javascript/" title="javascript">javascript<sup>1</sup></a></li>
+		
+			<li><a href="/tags/nodejs/" title="nodejs">nodejs<sup>1</sup></a></li>
+		
+			<li><a href="/tags/openlayers/" title="openlayers">openlayers<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+  <div class="tagcloudlist">
+    <p class="asidetitle">标签云</p>
+    <div class="tagcloudlist clearfix">
+       <a href="/tags/gis/" style="font-size: NaNpx;">gis</a><a href="/tags/html5/" style="font-size: NaNpx;">html5</a><a href="/tags/javascript/" style="font-size: NaNpx;">javascript</a><a href="/tags/nodejs/" style="font-size: NaNpx;">nodejs</a><a href="/tags/openlayers/" style="font-size: NaNpx;">openlayers</a>
+    </div>
+  </div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+      <li><a href="http://yangjian.me" target="_blank" title="YangJian">Alimon's Blog</a></li>
+      <li><a href="http://zespia.tw/hexo" target="_blank" title="Hexo">Hexo</a></li>
+    </ul>
+</div>
+
+  <div class="rsspart">
+	<a href="null" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello, I&#39;m pingoor. <br/>
+			This is my blog, enjoy youself!</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		<a href="http://weibo.com/2669170743" target="_blank" title="weibo"></a>
+		
+		
+		
+		<a href="https://github.com/pingoor" target="_blank" title="github"></a>
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://zespia.tw/hexo/" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2014 
+		
+		<a href="http://www.pingoor.com" target="_blank" title="pingoor">pingoor</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"pingoor"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+  </body>
+</html>
